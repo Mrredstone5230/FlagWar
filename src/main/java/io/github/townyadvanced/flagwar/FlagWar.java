@@ -43,6 +43,7 @@ import io.github.townyadvanced.flagwar.i18n.Translate;
 import io.github.townyadvanced.flagwar.listeners.FlagWarBlockListener;
 import io.github.townyadvanced.flagwar.listeners.FlagWarCustomListener;
 import io.github.townyadvanced.flagwar.listeners.FlagWarEntityListener;
+import io.github.townyadvanced.flagwar.listeners.WarzoneListener;
 import io.github.townyadvanced.flagwar.objects.Cell;
 import io.github.townyadvanced.flagwar.objects.CellUnderAttack;
 
@@ -100,9 +101,7 @@ public class FlagWar extends JavaPlugin {
     private FlagWarCustomListener flagWarCustomListener;
     /** Holds instance of the {@link FlagWarEntityListener}. */
     private FlagWarEntityListener flagWarEntityListener;
-    //** Holds instance of the {@link WarzoneListener}. */
-    //private WarzoneListener warzoneListener;    // DISABLED, BUGGY - Disabled due to issue with onBuild and onDestroy
-                                                  // resolving in wilderness.
+    private WarzoneListener warzoneListener;    // Disabled on main due to onBuild and onDestroy resolving in wilderness
 
     /** Configure {@link #flagWarLogger} and set up {@link #configLoader} on load. */
     public FlagWar() {
@@ -199,7 +198,7 @@ public class FlagWar extends JavaPlugin {
         PLUGIN_MANAGER.registerEvents(flagWarBlockListener, this);
         PLUGIN_MANAGER.registerEvents(flagWarCustomListener, this);
         PLUGIN_MANAGER.registerEvents(flagWarEntityListener, this);
-        //PLUGIN_MANAGER.registerEvents(warzoneListener, this); // Disabled due to bug
+        PLUGIN_MANAGER.registerEvents(warzoneListener, this);
         flagWarLogger.log(Level.INFO, () -> Translate.from("startup.events.registered"));
     }
 
@@ -209,7 +208,7 @@ public class FlagWar extends JavaPlugin {
         flagWarBlockListener = new FlagWarBlockListener(this);
         flagWarCustomListener = new FlagWarCustomListener(this);
         flagWarEntityListener = new FlagWarEntityListener();
-        // warzoneListener = new WarzoneListener(); // Disabled due to bug
+        warzoneListener = new WarzoneListener();
         flagWarLogger.log(Level.INFO, () -> Translate.from("startup.listeners.initialized"));
     }
 
